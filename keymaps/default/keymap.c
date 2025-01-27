@@ -172,8 +172,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       * └───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┘
       *     ┌─────┐                           ┌─────┐
       *     │     ├─────┐               ┌─────┤ BSP │
-      *     └─────┤     ├─────┐   ┌─────┤     ├─────┘
-      *           └─────│     │   │     ├─────┘
+      *     └─────┤     ├─────┐   ┌─────┤ ENT ├─────┘
+      *           └─────│     │   │  0  ├─────┘
       *                 └─────┘   └─────┘
       * SYMBOL (2)
       * ┌───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┐
@@ -181,17 +181,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       * ├───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┤
       * │% g│^ o│$ c│- s│ = │       │ " │( s│) c│' o│` g│
       * ├───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┤
-      * │ ! │ & │ | │ _ │ \ │       │   │ [ │ ] │   │   │
+      * │ ! │ & │ | │ _ │ \ │       │ < │ [ │ ] │ > │   │
       * └───┴───┴───┴───┴───┘       └───┴───┴───┴───┴───┘
       *     ┌─────┐                           ┌─────┐
       *     │ BSP ├─────┐               ┌─────┤ BSP │
-      *     └─────┤     ├─────┐   ┌─────┤     ├─────┘
+      *     └─────┤     ├─────┐   ┌─────┤ ENT ├─────┘
       *           └─────│     │   │     ├─────┘
       *                 └─────┘   └─────┘
       * NAV (3)
-      * ↖ ↑ ↗
-      * ← · →
-      * ↙ ↓ ↘
       * ┌───┬───┬───┬───┬───┐       ┌───┬───┬───┬───┬───┐
       * │   │   │   │   │   │       │swu│prv│ply│nxt│   │
       * ├───┼───┼───┼───┼───┤       ├───┼───┼───┼───┼───┤
@@ -218,19 +215,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LGUI,         KC_LALT,         TD(TD_CTL_CLN),  TD(TD_SFT_PCT),  XXXXXXX,              KC_PSLS,         KC_4,            KC_5,            KC_6,            KC_PMNS,
         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,              KC_0,            KC_1,            KC_2,            KC_3,            KC_PDOT,
 
-                                          XXXXXXX,         XXXXXXX,         XXXXXXX,              XXXXXXX,         XXXXXXX,         KC_BSPC
+                                          XXXXXXX,         XXXXXXX,         XXXXXXX,              KC_0,            KC_ENT,         KC_BSPC
     ),
     [_SYMBOL] = LAYOUT_split_3x5_3(
-        S(KC_8),         S(KC_2),         S(KC_3),         S(KC_GRAVE),     S(KC_EQL),            MS_WHLU,         S(KC_LBRC),      S(KC_RBRC),      XXXXXXX,         XXXXXXX,
+        S(KC_8),         S(KC_2),         S(KC_3),         S(KC_GRAVE),     S(KC_EQL),            XXXXXXX,         S(KC_LBRC),      S(KC_RBRC),      XXXXXXX,         XXXXXXX,
         TD(TD_GUI_PCT),  TD(TD_ALT_CRT),  TD(TD_CTL_DOL),  LSFT_T(KC_MINS), KC_EQUAL,             S(KC_QUOT),      TD(TD_SFT_LPA),  TD(TD_CTL_RPA),  LALT_T(KC_QUOT), RGUI_T(KC_GRAVE),
-        S(KC_1),         S(KC_7),         S(KC_BSLS),      S(KC_MINS),      KC_BSLS,              MS_WHLD,         KC_LBRC,         KC_RBRC,         XXXXXXX,         S(KC_SLSH),
+        S(KC_1),         S(KC_7),         S(KC_BSLS),      S(KC_MINS),      KC_BSLS,              S(KC_COMM),      KC_LBRC,         KC_RBRC,         S(KC_DOT),       S(KC_SLSH),
 
-                                          KC_BSPC,         XXXXXXX,         XXXXXXX,              XXXXXXX,         XXXXXXX,         KC_BSPC
+                                          KC_BSPC,         XXXXXXX,         XXXXXXX,              XXXXXXX,         KC_ENT,         KC_BSPC
     ),
     [_NAV] = LAYOUT_split_3x5_3(
-        XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,              XXXXXXX,         KC_MPRV,         KC_MPLY,           KC_MNXT,         XXXXXXX,
+        XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,              MS_WHLU,         KC_MPRV,         KC_MPLY,           KC_MNXT,         XXXXXXX,
         KC_LGUI,         KC_LALT,         KC_LCTL,         KC_LSFT,         XXXXXXX,              KC_LEFT,         KC_DOWN,         KC_UP,             KC_RIGHT,        XXXXXXX,
-        XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,              XXXXXXX,         KC_KB_MUTE,      KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP, XXXXXXX,
+        XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,              MS_WHLD,         KC_KB_MUTE,      KC_KB_VOLUME_DOWN, KC_KB_VOLUME_UP, XXXXXXX,
 
                                           XXXXXXX,         XXXXXXX,         XXXXXXX,              XXXXXXX,         XXXXXXX,         XXXXXXX
     )
