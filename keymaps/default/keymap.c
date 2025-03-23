@@ -65,13 +65,9 @@ enum custom_keycodes {
 // Set to true any time KC_REV_SEMI is being pressed
 bool is_gui_down = false;
 
-/* Set to true after KC_REV_SEMI has been held for TAPPING_TERM, or if another key is pressed and released while
- * KC_REV_SEMI is down (resulting in sending the GUI-modified version) */
+// Set to true after KC_REV_SEMI has been held for TAPPING_TERM
 bool is_gui_held = false;
 
-// Set to true when deferring decision-making on whether to send the GUI-modified or regular version of a key
-// Right now, only a single deferred keycode is supported
-bool is_keycode_deferred = false;
 uint16_t gui_timer;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -79,8 +75,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_REV_SEMI:
             // Send : when tapped (held less than TAPPING_TERM)
             // Send ; when tapped (held less than TAPPING_TERM) with Shift or OSM Shift
-            // If another key is pressed and released while KC_REV_SEMI is down, send the GUI-modified version, even
-            // if the KC_REV_SEMI key was not held more than TAPPING_TERM
 
             if (record->event.pressed) {
                 // Key pressed
@@ -113,30 +107,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false; // Skip further processing for this key
-        default:
-            if (is_gui_down) {
-                if (record->event.pressed) {
-                    // Wait on deciding what to send until after one of the keys is released
-                    is_keycode_deferred = true;
-                    return false;
-                } else if (is_keycode_deferred) {
-                    // If a key is pressed and released before the KC_REV_SEMI key is released, send the mod version
-                    register_mods(MOD_BIT(KC_LGUI));
-                    register_code(keycode);
-                    unregister_code(keycode);
-                    is_keycode_deferred = false;
-                    is_gui_held = true; // Prevent sending : or ; even if KC_REV_SEMI is released before TAPPING_TERM
-                    return false;
-                }
-            } else {
-                // If a key was deferred but KC_REV_SEMI was released first, send the normal keycode
-                if (!record->event.pressed && is_keycode_deferred) {
-                    is_keycode_deferred = false;
-                    register_code(keycode);
-                    unregister_code(keycode);
-                }
-            }
-    }
+   }
     return true; // Process all other keycodes as usual
 }
 
@@ -147,6 +118,15 @@ void matrix_scan_user(void) {
         is_gui_held = true;
     }
 }
+
+/* Left vs right layout for CHORDAL_HOLD */
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
+    LAYOUT_split_3x5_3(
+        'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R',
+        'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R',
+        'L', 'L', 'L', 'L', 'L',  'R', 'R', 'R', 'R', 'R',
+                  'L', 'L', 'L',  'R', 'R', 'R'
+    );
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      /* QWERTY (0)

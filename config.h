@@ -29,6 +29,12 @@
 #define TAPPING_TERM 200
 #define QUICK_TAP_TERM 150
 
+/* Hold only accepts taps from opposite hands */
+#define CHORDAL_HOLD
+
+/* Avoid accidental holds by registering a tap even when holding, then tapping another key within tapping term */
+#define PERMISSIVE_HOLD
+
 /* One shot modifiers */
 #define ONESHOT_TAP_TOGGLE 2
 #define ONESHOT_TIMEOUT 5000
